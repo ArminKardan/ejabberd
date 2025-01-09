@@ -1597,7 +1597,7 @@ get_commands_spec() ->
 			result_desc = "Number",
 			result = {value, integer}},
      #ejabberd_commands{name = get_mam_messages,
-			tags = [internal, mam],
+			tags = [mam],
 			desc = "Get the mam messages",
 			policy = user,
 			module = mod_mam, function = get_mam_messages,

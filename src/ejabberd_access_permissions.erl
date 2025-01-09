@@ -81,7 +81,7 @@ can_access(Cmd, CallerInfo) ->
 	fun({Name, _} = Def, none) ->
 	    case matches_definition(Def, Cmd, CallerModule, Tag, Host, CallerInfo) of
 		true ->
-		    ?DEBUG("Command '~p' execution allowed by rule "
+		    ?DEBUG("Command '~p' execution allowedddddd by rule "
 			   "'~ts'~n (CallerInfo=~p)", [Cmd, Name, CallerInfo]),
 		    allow;
 		_ ->
