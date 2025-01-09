@@ -287,7 +287,7 @@ modules:
     ip_access: trusted_network
   mod_roster:
     versioning: true
-  mod_sip: {}
+  # mod_sip: {}
   mod_s2s_bidi: {}
   mod_s2s_dialback: {}
   mod_shared_roster: {}
