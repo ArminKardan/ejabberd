@@ -262,20 +262,30 @@ get_commands_definition(Version) ->
 execute_command2(Name, Arguments, CallerInfo) ->
     execute_command2(Name, Arguments, CallerInfo, ?DEFAULT_VERSION).
 
+
 execute_command2(Name, Arguments, CallerInfo, Version) ->
     Command = get_command_definition(Name, Version),
-    FrontedCalledInternal =
-        maps:get(caller_module, CallerInfo, none) /= ejabberd_web_admin
-        andalso lists:member(internal, Command#ejabberd_commands.tags),
-    case {ejabberd_access_permissions:can_access(Name, CallerInfo),
-          FrontedCalledInternal} of
-        {allow, false} ->
-	    do_execute_command(Command, Arguments);
-        {_, true} ->
-	    throw({error, frontend_cannot_call_an_internal_command});
-        {deny, false} ->
-	    throw({error, access_rules_unauthorized})
+    case ejabberd_access_permissions:can_access(Name, CallerInfo) of
+        allow -> 
+            do_execute_command(Command, Arguments);
+        deny -> 
+            throw({error, access_rules_unauthorized})
     end.
+    
+% execute_command2(Name, Arguments, CallerInfo, Version) ->
+%     Command = get_command_definition(Name, Version),
+%     FrontedCalledInternal =
+%         maps:get(caller_module, CallerInfo, none) /= ejabberd_web_admin
+%         andalso lists:member(internal, Command#ejabberd_commands.tags),
+%     case {ejabberd_access_permissions:can_access(Name, CallerInfo),
+%           FrontedCalledInternal} of
+%         {allow, false} ->
+% 	    do_execute_command(Command, Arguments);
+%         {_, true} ->
+% 	    throw({error, frontend_cannot_call_an_internal_command});
+%         {deny, false} ->
+% 	    throw({error, access_rules_unauthorized})
+%     end.
 
 
 do_execute_command(Command, Arguments) ->
